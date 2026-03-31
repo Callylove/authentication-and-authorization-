@@ -80,7 +80,7 @@ export class UsersController {
 
   @Get(':uuid')
   @UseGuards(JwtGuard, RoleGuard)
-  @UseRoles(ROLE_TYPE.ADMIN)
+  @UseRoles(ROLE_TYPE.ADMIN, ROLE_TYPE.USER)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Fetch User details' })
@@ -89,7 +89,8 @@ export class UsersController {
     @UserAuth() authUser: LoggedInUser,
   ) {
     try {
-      const data = await this.userService.findUserByUUID({uuid});
+      const {role, ...data} = await this.userService.findUserByUUID({uuid});
+      
       console.log({GETUSRID: data});
       
       return appResponse({

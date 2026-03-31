@@ -11,7 +11,7 @@ export class RoleService {
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
   ) {
-    // this.seedRoles();
+    this.seedRoles();
   }
   async seedRoles() {
     try {
